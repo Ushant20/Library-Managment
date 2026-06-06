@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-%oza(g33hk+-x-ms)lj4n1yq_=x0j8)1kg217va4ec#-738-21
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["fb.comworld.in",
+                 ".railway.app",
+                 "localhost",
+                 "127.0.0.1",
+                 ]
 
 
 # Application definition
