@@ -178,7 +178,7 @@ def generate_receipt(student):
     image_path = os.path.join(
     os.path.dirname(__file__),
     "assets",
-    "sign2.JPEG"
+    "sign2.jpeg"
 )
 
     pdf.drawImage(
@@ -368,7 +368,7 @@ def generate_payment_receipt(payment):
     image_path = os.path.join(
         os.path.dirname(__file__),
         "assets",
-        "sign2.JPEG"
+        "sign2.jpeg"
     )
 
     pdf.drawImage(
