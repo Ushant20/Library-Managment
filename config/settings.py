@@ -126,6 +126,7 @@ STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
+    "https://fb.comworld.in",
 ]
 
 MEDIA_URL = "/media/"
