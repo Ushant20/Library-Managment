@@ -25,10 +25,9 @@ SECRET_KEY = 'django-insecure-%oza(g33hk+-x-ms)lj4n1yq_=x0j8)1kg217va4ec#-738-21
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["fb.comworld.in",
+ALLOWED_HOSTS = ["api.fb.comworld.in",
+                 "fb.comworld.in",
                  ".railway.app",
-                 "localhost",
-                 "127.0.0.1",
                  ]
 
 
@@ -125,7 +124,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5174",
+]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://fb.comworld.in",
+    "https://api.fb.comworld.in",
+]

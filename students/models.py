@@ -52,9 +52,14 @@ class Payment(models.Model):
         auto_now_add=True
     )
 
+    receipt_url = models.CharField(
+    max_length=500,
+    blank=True,
+    null=True
+    )
+
     def __str__(self):
         return f"{self.student.name} - ₹{self.amount}"
-
 
 class Settings(models.Model):
 

@@ -19,6 +19,16 @@ class PaymentListCreateView(generics.ListCreateAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
 
+    def perform_create(self, serializer):
+
+        payment = serializer.save()
+
+        receipt_url = generate_payment_receipt(payment)
+
+        payment.receipt_url = receipt_url
+
+        payment.save()
+
 class LoginView(APIView):
 
     def post(self, request):
