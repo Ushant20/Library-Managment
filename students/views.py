@@ -113,13 +113,13 @@ class DashboardView(APIView):
         ).count()
 
         total_collection = Payment.objects.aggregate(
-            total=Sum("fee_amount")
+            total=Sum("amount")
         )["total"] or 0
 
         pending_collection = Student.objects.filter(
             fee_status="Pending"
         ).aggregate(
-            total=Sum("fee_amount")
+            total=Sum("amount")
         )["total"] or 0
 
         return Response({
