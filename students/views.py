@@ -63,6 +63,36 @@ class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
+    def perform_update(self, serializer):
+
+        old_student = self.get_object()
+
+        student = serializer.save()
+
+        # Renewal detect karo
+        if (
+            old_student.fee_status != "Paid"
+            and student.fee_status == "Paid"
+        ):
+
+            student.last_payment_date = date.today()
+
+            if student.fee_due_date:
+                student.fee_due_date = (
+                    student.fee_due_date + timedelta(days=30)
+                )
+            else:
+                student.fee_due_date = (
+                    date.today() + timedelta(days=30)
+                )
+
+            Payment.objects.create(
+                student=student,
+                amount=student.fee_amount
+            )
+
+            student.save()
+
 class StudentListCreateView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
