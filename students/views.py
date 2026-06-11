@@ -12,8 +12,7 @@ from .models import Payment
 from .serializers import PaymentSerializer
 from .models import Settings
 from .serializers import SettingsSerializer
-from .utils import generate_receipt
-
+from .utils import generate_receipt, generate_payment_receipt
 
 class PaymentListCreateView(generics.ListCreateAPIView):
     queryset = Payment.objects.all()
@@ -70,19 +69,19 @@ class StudentListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
 
-        print("🔥 PERFORM CREATE HIT 🔥")
+     student = serializer.save()
 
-        student = serializer.save()
+    # Payment entry create karo
+     Payment.objects.create(
+        student=student,
+        amount=student.fee_amount
+     )
 
-        print("🔥 STUDENT SAVED 🔥")
+     receipt_url = generate_receipt(student)
 
-        receipt_url = generate_receipt(student)
+     student.receipt_url = receipt_url
 
-        print("🔥 RECEIPT URL =", receipt_url)
-
-        student.receipt_url = receipt_url
-
-        student.save()
+     student.save()
 
 
 class DashboardView(APIView):
