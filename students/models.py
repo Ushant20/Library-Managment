@@ -16,7 +16,7 @@ class Student(models.Model):
     whatsapp =models.CharField(max_length=10)
     address = models.TextField()
     joining_date = models.DateField()
-    fee_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
     fee_status = models.CharField(
         max_length=20,
         choices=FEE_STATUS_CHOICES,
