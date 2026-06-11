@@ -119,7 +119,7 @@ class DashboardView(APIView):
         pending_collection = Student.objects.filter(
             fee_status="Pending"
         ).aggregate(
-            total=Sum("amount")
+            total=Sum("fee_amount")
         )["total"] or 0
 
         return Response({
