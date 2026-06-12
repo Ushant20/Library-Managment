@@ -59,8 +59,8 @@ class LoginView(APIView):
             status=status.HTTP_401_UNAUTHORIZED
         )
 
-class StudentListCreateView(generics.ListCreateAPIView):
-    queryset = Student.objects.filter(is_active=True)
+class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
     # def perform_update(self, serializer):
@@ -94,7 +94,7 @@ class StudentListCreateView(generics.ListCreateAPIView):
     #         student.save()
 
 class StudentListCreateView(generics.ListCreateAPIView):
-    queryset = Student.objects.all()
+    queryset = Student.objects.filter(is_active=True)
     serializer_class = StudentSerializer
 
     def perform_create(self, serializer):
