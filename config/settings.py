@@ -29,8 +29,7 @@ SECRET_KEY = 'django-insecure-%oza(g33hk+-x-ms)lj4n1yq_=x0j8)1kg217va4ec#-738-21
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
+    
     "api.fb.comworld.in",
     "fb.comworld.in",
     ".railway.app",
