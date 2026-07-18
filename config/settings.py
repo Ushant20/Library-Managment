@@ -83,18 +83,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-load_dotenv()
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv(
-            "DATABASE_URL",
-            "postgresql://postgres:ushant20@localhost:5432/library_db"
-        ),
+        default=os.environ.get("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=os.getenv("DATABASE_URL") is not None,
+        ssl_require=True,
     )
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
