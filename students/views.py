@@ -13,6 +13,7 @@ from .serializers import PaymentSerializer
 from .models import Settings
 from .serializers import SettingsSerializer
 from .utils import generate_receipt, generate_payment_receipt
+from django.utils import timezone
 
 class PaymentListCreateView(generics.ListCreateAPIView):
     queryset = Payment.objects.all()
@@ -118,22 +119,28 @@ class DashboardView(APIView):
 
     def get(self, request):
 
+        # Current date
+        today = timezone.localdate()
+
+        # Total Students
         total_students = Student.objects.count()
 
+        # Paid Students
         paid_students = Student.objects.filter(
             fee_status="Paid"
         ).count()
 
+        # Pending Students
         pending_students = Student.objects.filter(
             fee_status="Pending"
         ).count()
 
-        today = date.today()
-
+        # Fee Due Today
         due_today = Student.objects.filter(
             fee_due_date=today
         ).count()
 
+        # Fee Due This Week
         due_this_week = Student.objects.filter(
             fee_due_date__range=[
                 today,
@@ -141,26 +148,37 @@ class DashboardView(APIView):
             ]
         ).count()
 
+        # Total Collection - All Time
         total_collection = Payment.objects.aggregate(
             total=Sum("amount")
         )["total"] or 0
 
+        # Monthly Collection - Current Month Only
+        monthly_collection = Payment.objects.filter(
+            payment_date__year=today.year,
+            payment_date__month=today.month
+        ).aggregate(
+            total=Sum("amount")
+        )["total"] or 0
+
+        # Pending Collection
         pending_collection = Student.objects.filter(
             fee_status="Pending"
         ).aggregate(
             total=Sum("fee_amount")
         )["total"] or 0
 
+        # Dashboard Response
         return Response({
             "total_students": total_students,
             "paid_students": paid_students,
             "pending_students": pending_students,
             "total_collection": total_collection,
+            "monthly_collection": monthly_collection,
             "pending_collection": pending_collection,
             "due_today": due_today,
             "due_this_week": due_this_week,
         })
-    
 
 class PaymentStatsView(APIView):
     def get(self, request):
